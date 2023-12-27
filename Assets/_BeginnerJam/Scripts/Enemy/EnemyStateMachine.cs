@@ -57,7 +57,6 @@ namespace BeginnerJam.AI
                     break;
 
                 case EnemyState.isDead:
-                    _enemyMovement.SetAbleToMove(false);
                     break;
             }
         }

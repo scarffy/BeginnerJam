@@ -1,27 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
+using BeginnerJam.World;
 using UnityEngine;
 
-namespace BeginnerJam
+namespace BeginnerJam.AI
 {
+    using Core;
+    
     public class BaseAttackModule : MonoBehaviour
     {
         [SerializeField] private int _attackDamage = 30;
-        [SerializeField] private float _attackRate = 1.2f;
+        [SerializeField] private float _attackRate = 3f;
         [SerializeField] private float _nextAttack = 0f;
-        [SerializeField] private GameObject _projectilPrefab;
+        
+        [Header("Bullet Settings")]
+        // [SerializeField] private GameObject _projectilPrefab;
         [SerializeField] private Transform _projectileSpawnTransform;
 
         [SerializeField] private GameObject _attackTarget;
         private IDamageable Damageable;
+        
+        [Header("Settings")]
+        [SerializeField] private bool _bIsRotatable = false;
 
-        [SerializeField] private bool _bIsRotateable = false;
+        [SerializeField] private Transform _rotatableObject;
 
         public void SetAttackTarget(GameObject target)
         {
             _attackTarget = target;
-
-            //! TODO: Test this out
+            
             if (target == null)
                 return;
 
@@ -36,20 +41,24 @@ namespace BeginnerJam
         {
             if (Damageable == null)
                 return;
-
-
+            
             //! Look at the target
-            if (_bIsRotateable)
+            if (_bIsRotatable)
             {
-                transform.LookAt(_attackTarget.transform.position);
+                if(_attackTarget != null)
+                    _rotatableObject.LookAt(_attackTarget.transform.position);
             }
 
             if (_nextAttack <= 0)
             {
-                // Damageable.DoDamage(_attackDamage);
-                //! Spawn projectile
-                //! Do object pooling
-                GameObject go = Instantiate(_projectilPrefab, _projectileSpawnTransform.position, _projectileSpawnTransform.rotation);
+                // GameObject bullet = Instantiate(_projectilPrefab, _projectileSpawnTransform.position, _projectileSpawnTransform.rotation);
+                GameObject bullet = WorldManager.Instance.BulletPool.GetPooledObject();
+                if (bullet != null)
+                {
+                    bullet.transform.position = _projectileSpawnTransform.position;
+                    bullet.transform.rotation = _projectileSpawnTransform.rotation;
+                    bullet.SetActive(true);
+                }
 
                 _nextAttack = _attackRate;
             }

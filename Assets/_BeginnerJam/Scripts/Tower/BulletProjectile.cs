@@ -17,7 +17,7 @@ namespace BeginnerJam
 
         private void OnEnable()
         {
-            if (!_bIsDebugging)
+            if (_bIsDebugging)
                 Destroy(gameObject, 10f);
 
             if (_rigidbody == null)
@@ -28,7 +28,6 @@ namespace BeginnerJam
 
         public void BulletTrigger(Collider collider)
         {
-
             if (collider.CompareTag("Enemy"))
             {
                 Debug.Log("[BulletProjectile]: Found enemy");
@@ -40,11 +39,15 @@ namespace BeginnerJam
                     gameObject.SetActive(false);
                 }
             }
+            else if(collider.CompareTag("Finish"))
+            {
+                gameObject.SetActive(false);
+            }
         }
 
         private void MoveBullet()
         {
-            _rigidbody.AddForce(10 * transform.forward);
+            _rigidbody.AddForce(50 * transform.forward);
         }
 
         private void OnDisable()

@@ -44,6 +44,7 @@ namespace BeginnerJam.AI
             }
             else
             {
+                Debug.Log("[TowerStateMachine]: List is empty");
                 SetTowerState(TowerState.seeking);
             }
         }

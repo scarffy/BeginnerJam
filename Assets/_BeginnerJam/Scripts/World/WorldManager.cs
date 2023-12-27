@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace BeginnerJam.World
 {
     using Data;
-    using AI;
+    using Core;
     
     public class WorldManager : MonoBehaviour
     {
@@ -28,12 +25,11 @@ namespace BeginnerJam.World
         [Header("Settings")] 
         [SerializeField] private LevelConfig _levelConfig;
 
-        [Space(10)] [SerializeField] private int _totalObjectPool = 25;
-        [SerializeField] private List<GameObject> _objectPools;
+        [Header("Object Pool Information")] 
+        [SerializeField] private BulletPool _bulletPool;
 
-        [SerializeField] private List<GameObject> _currentEnemyList;
-
-        [FormerlySerializedAs("_currentEnemyInMap")]
+        [SerializeField] private EnemyPool _enemyPool;
+        
         [Header("Current Information")] 
         [SerializeField] private int currentEnemiesInMap;
         [SerializeField] private int _totalEnemyAllowedInMap = 25;
@@ -76,5 +72,10 @@ namespace BeginnerJam.World
         public void AddEnemyCountInMap() => currentEnemiesInMap++;
         public int CurrentEnemiesInMap => currentEnemiesInMap;
         public int TotalEnemyAllowedInMap => _totalEnemyAllowedInMap;
+
+        public BulletPool BulletPool => _bulletPool;
+        public EnemyPool EnemyPool => _enemyPool;
+
+        public LevelConfig LevelConfig => _levelConfig;
     }
 }

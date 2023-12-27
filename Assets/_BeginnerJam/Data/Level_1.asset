@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _totalEnemy: 100
   _totalWaves: 10
+  _timeToStartWave: 15
+  _maxTowerManaAllowed: 60

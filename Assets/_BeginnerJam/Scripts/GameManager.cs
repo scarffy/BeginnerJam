@@ -32,6 +32,9 @@ namespace BeginnerJam.Manager
         [SerializeField] private WorldManager _worldManager;
         [SerializeField] private TimeManager _timeManager;
 
+        [Header("Temporary Settings")] 
+        [SerializeField] private int _mana = 100;
+
         private void Start()
         {
             _uiManager.Initialize();
@@ -45,10 +48,14 @@ namespace BeginnerJam.Manager
         {
             EventPipeline.UpdateEvent?.Invoke();
 
+            
+            //! TODO: To Remove this debug mode
             if (UnityEngine.Input.GetKeyUp(KeyCode.E))
             {
                 StartGame();
             }
+            
+            //! TODO: Change this to new input system
             if (UnityEngine.Input.GetKeyUp(KeyCode.Escape))
             {
                 Application.Quit();
@@ -64,7 +71,7 @@ namespace BeginnerJam.Manager
             EventPipeline.OnGameEnd += GameEnd;
 
             _timeManager.OnCountDownEnd += GameStart;
-            _timeManager.StartCountDown(30f);
+            _timeManager.StartCountDown(_worldManager.LevelConfig._timeToStartWave);
 
             _uiManager.SetUIState(UIManager.UIState.hudUI);
         }

@@ -45,12 +45,7 @@ namespace BeginnerJam.World
             if(!bCanStartSpawn)
                 return;
             
-            //! Check ObjectPools if we can reuse
-            //! If ObjectPools is more than we can reuse, instantiate a new one
-            //! Instantiate/Reuse Enemy object
-            //! Add current enemy index
-
-            if (_nextSpawn < _spawnRate)
+           if (_nextSpawn < _spawnRate)
             {
                 _nextSpawn += Time.deltaTime;
             }
@@ -63,10 +58,18 @@ namespace BeginnerJam.World
                     return;
 
                 _nextSpawn = 0;
-                GameObject go = Instantiate(_enemyPrefab, transform.position, transform.rotation);
+                // GameObject go = Instantiate(_enemyPrefab, transform.position, transform.rotation);
+                GameObject enemy = WorldManager.Instance.EnemyPool.GetPooledObject();
+                if (enemy != null)
+                {
+                    enemy.transform.position = transform.position;
+                    enemy.transform.rotation = transform.rotation;
+                    enemy.SetActive(true);
+                }
+                
                 _totalEnemiesToSpawn--;
 
-                EnemyStateMachine enemyState = go.GetComponent<EnemyStateMachine>();
+                EnemyStateMachine enemyState = enemy.GetComponent<EnemyStateMachine>();
                 enemyState.SetEnemyState(EnemyStateMachine.EnemyState.isMoving);
 
                 WorldManager.Instance.AddEnemyCountInMap();
