@@ -5,10 +5,11 @@ using UnityEngine;
 
 namespace BeginnerJam.Manager
 {
+    using Core;
     using UI;
     using Input;
+    using Audios;
     using World;
-    using BeginnerJam.AI;
 
     public class GameManager : MonoBehaviour
     {
@@ -31,6 +32,7 @@ namespace BeginnerJam.Manager
         [SerializeField] private InputManager _inputManager;
         [SerializeField] private WorldManager _worldManager;
         [SerializeField] private TimeManager _timeManager;
+        [SerializeField] private AudioManager _audioManager;
 
         [Header("Temporary Settings")] 
         [SerializeField] private int _mana = 100;
