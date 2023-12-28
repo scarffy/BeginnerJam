@@ -5,11 +5,10 @@ using UnityEngine;
 
 namespace BeginnerJam.Manager
 {
-    using Core;
     using UI;
     using Input;
-    using Audios;
     using World;
+    using AI;
 
     public class GameManager : MonoBehaviour
     {
@@ -39,11 +38,11 @@ namespace BeginnerJam.Manager
 
         private void Start()
         {
+            _audioManager.Initialize();
             _uiManager.Initialize();
             _inputManager.Initialize();
             _worldManager.Initialize();
             _timeManager.Initialize();
-
         }
 
         private void Update()
